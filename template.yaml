@@ -1,0 +1,95 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  san
+
+  Sample SAM Template for san
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 60
+
+Resources:
+  FormatCNJFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      FunctionName: FormatCNJ
+      Role: arn:aws:iam::034880475115:role/SAMRole
+      CodeUri: functions/
+      Handler: lambdas.format_cnj
+      Runtime: python3.6
+      Events:
+        FormatCNJApi:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /format_cnj
+            Method: get
+  FormatDateFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      FunctionName: FormatDate
+      Role: arn:aws:iam::034880475115:role/SAMRole
+      CodeUri: functions/
+      Handler: lambdas.format_date
+      Runtime: python3.6
+      Events:
+        FormatDateApi:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /format_date
+            Method: get
+  FormatNumberFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      FunctionName: FormatNumber
+      Role: arn:aws:iam::034880475115:role/SAMRole
+      CodeUri: functions/
+      Handler: lambdas.format_number
+      Runtime: python3.6
+      Events:
+        FormatNumberApi:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /format_number
+            Method: get
+  FullSanitizationFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      FunctionName: FullSanitization
+      Role: arn:aws:iam::034880475115:role/SAMRole
+      CodeUri: functions/
+      Handler: lambdas.full_sanitization
+      Runtime: python3.6
+      Events:
+        FullSanitizationApi:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /full_sanitization
+            Method: get
+
+Outputs:
+  FormatCNJApi:
+    Description: "API Gateway endpoint URL"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/prod/format_cnj/"
+  FormatCNJFunction:
+    Description: "Lambda Function ARN"
+    Value: !GetAtt FormatCNJFunction.Arn
+  FormatDateApi:
+    Description: "API Gateway endpoint URL"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/prod/format_date/"
+  FormatDateFunction:
+    Description: "Lambda Function ARN"
+    Value: !GetAtt FormatDateFunction.Arn
+  FormatNumberApi:
+    Description: "API Gateway endpoint URL"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/prod/format_number/"
+  FormatNumberFunction:
+    Description: "Lambda Function ARN"
+    Value: !GetAtt FormatNumberFunction.Arn
+  FullSanitizationApi:
+    Description: "API Gateway endpoint URL"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/prod/full_sanitization/"
+  FullSanitizationFunction:
+    Description: "Lambda Function ARN"
+    Value: !GetAtt FullSanitizationFunction.Arn
